@@ -1,0 +1,39 @@
+
+<ng-template #loading>
+  <p><img src="assets/img/ajax-loader.gif">
+    Chargement en cours...</p>
+</ng-template>
+
+<table *ngIf="books$ | async as books ; else loading">
+  <thead>
+  <tr>
+    <th></th>
+    <th>Titre</th>
+    <th>Auteur</th>
+    <th>Prix</th>
+    <th>Note</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let book of books; odd as odd"
+      [class.odd-row]="odd"
+      class="catalog-row">
+    <td class="catalog-image">
+      <a [routerLink]="['/catalog/book', book._id.$oid]">
+        <img [src]="book.image">
+      </a>
+    </td>
+    <td class="catalog-title">{{book.title | uppercase}}</td>
+    <td class="catalog-author">{{book.author}}</td>
+    <td class="catalog-price right">{{book.price |currency: 'EUR'}}</td>
+    <td class="catalog-rating">
+      <app-rating [(value)]="book.rating"></app-rating>
+      <input type="number" [(ngModel)]="book.rating">
+    </td>
+    <td class="catalog-buttons">
+      <app-buy-button [book]="book"></app-buy-button>
+    </td>
+  </tr>
+  </tbody>
+</table>

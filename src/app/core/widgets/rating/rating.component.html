@@ -1,0 +1,9 @@
+<span *ngFor="let full of stars; index as i"
+      (click)="onClick(i)"
+      class="star"
+  ><span *ngIf="full"
+         class="star-full">&#9733;</span
+  ><span *ngIf="!full"
+         class="star-empty">&#9734;</span
+></span>
+

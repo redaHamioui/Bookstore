@@ -1,0 +1,50 @@
+<table *ngIf="!cart.isEmpty() ; else empty">
+  <thead>
+  <tr>
+    <th></th>
+    <th>Titre</th>
+    <th>Auteur</th>
+    <th>Prix</th>
+    <th>Quantité</th>
+    <th>Montant</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let row of cart.rows; odd as odd"
+      [class.odd-row]="odd"
+      class="cart-row">
+    <td class="cart-image">
+      <a [routerLink]="['/catalog/book', row.book._id.$oid]">
+        <img [src]="row.book.image">
+      </a>
+    </td>
+    <td class="cart-title">{{row.book.title}}</td>
+    <td class="cart-author">{{row.book.author}}</td>
+    <td class="cart-price right">{{row.book.price | currency: 'EUR'}}</td>
+    <td class="cart-quantity"><input type="number"
+               [(ngModel)]="row.quantity"></td>
+    <td class="cart-amount right">{{row.amount() | currency: 'EUR'}}</td>
+    <td class="cart-buttons">
+      <button (click)="cart.removeRow(row)">
+        <img src="assets/img/cart-remove.png">
+      </button>
+    </td>
+  </tr>
+  </tbody>
+  <tfoot>
+  <tr>
+    <td colspan="3"></td>
+    <td>TOTAL :</td>
+    <td>{{cart.itemCount()}}</td>
+    <td class="right">{{cart.totalPrice() |currency: 'EUR'}}</td>
+  </tr>
+  </tfoot>
+</table>
+
+<ng-template #empty>
+  <p>Votre panier est vide.</p>
+</ng-template>
+
+
+<app-order-button></app-order-button>

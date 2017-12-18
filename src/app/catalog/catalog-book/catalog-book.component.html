@@ -1,0 +1,39 @@
+<ng-template #loading>
+  Chargement en cours...
+</ng-template>
+<table *ngIf="book$|async as book ; else loading">
+  <tr>
+    <th>Couverture</th>
+    <td><img [src]="book.image"></td>
+  </tr>
+  <tr>
+    <th>Titre</th>
+    <td>{{book.title}}</td>
+  </tr>
+  <tr>
+    <th>Auteur</th>
+    <td>{{book.author}}</td>
+  </tr>
+  <tr>
+    <th>Prix</th>
+    <td>{{book.price}}</td>
+  </tr>
+  <tr>
+    <th>Rating</th>
+    <td>{{book.rating}}</td>
+  </tr>
+  <tr>
+    <th>Pages</th>
+    <td>{{book.pages}}</td>
+  </tr>
+  <tr>
+    <th>Description</th>
+    <td [innerHTML]="book.description"></td>
+  </tr>
+  <tr>
+    <th></th>
+    <td>
+      <app-buy-button [book]="book"></app-buy-button>
+    </td>
+  </tr>
+</table>

@@ -1,0 +1,84 @@
+<div class="debug">
+  <pre>{{data | json}}</pre>
+  <p><button (click)="log()">Log</button></p>
+</div>
+
+<form #formInfo="ngForm"
+      [class.submitted]="formInfo.submitted"
+      (ngSubmit)="formInfo.valid && save()">
+  <fieldset ngModelGroup="identity">
+    <legend>Votre identité</legend>
+    <app-field label="Prénom">
+      <input type="text" name="firstname"
+             [(ngModel)]="data.identity.firstname">
+    </app-field>
+    <app-field label="Nom*">
+      <input type="text" name="lastname"
+             [(ngModel)]="data.identity.lastname"
+             required minlength="2">
+    </app-field>
+    <app-field label="Email">
+      <input type="email" name="email" domain="gmail.com"
+             [(ngModel)]="data.identity.email">
+    </app-field>
+    <app-field label="Téléphone">
+      <input type="tel" name="phone"
+             [(ngModel)]="data.identity.phone">
+    </app-field>
+  </fieldset>
+  <fieldset ngModelGroup="shipping">
+    <legend>Adresse de livraison</legend>
+    <app-field label="Numéro et rue">
+      <input type="text" name="street"
+             [(ngModel)]="data.shipping.street">
+    </app-field>
+    <app-field label="Code postal*">
+      <input type="text" name="zipcode"
+             [(ngModel)]="data.shipping.zipcode"
+             required zipcode>
+    </app-field>
+    <app-field label="Ville*">
+      <input type="text" name="city"
+             [(ngModel)]="data.shipping.city"
+             required>
+    </app-field>
+    <app-field label="Pays">
+      <input type="text" name="country"
+             [(ngModel)]="data.shipping.country">
+    </app-field>
+  </fieldset>
+  <p>
+    <label><input type="checkbox" name="sameAddress"
+                  [(ngModel)]="data.sameAddress">
+      Même adresse de facturation.
+    </label>
+  </p>
+  <fieldset ngModelGroup="billing"
+            *ngIf="data.sameAddress">
+    <legend>Adresse de facturation</legend>
+    <app-field label="Numéro et rue">
+      <input type="text" name="street"
+             [(ngModel)]="data.billing.street">
+    </app-field>
+    <app-field label="Code postal*">
+      <input type="text" name="zipcode"
+             [(ngModel)]="data.billing.zipcode"
+             required zipcode>
+    </app-field>
+    <app-field label="Ville*">
+      <input type="text" name="city"
+             [(ngModel)]="data.billing.city"
+             required>
+    </app-field>
+    <app-field label="Pays">
+      <input type="text" name="country"
+             [(ngModel)]="data.billing.country">
+    </app-field>
+  </fieldset>
+
+
+  <p>
+    <button [disabled]="formInfo.submitted && formInfo.invalid"
+            type="submit">Enregistrer</button>
+  </p>
+</form>
